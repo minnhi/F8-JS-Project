@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Đăng Ký Thành Viên</title>
+    <!-- CSS -->
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <main>
+      <form
+        action=""
+        method="post"
+        class="form"
+        id="form_1"
+        autocomplete="off"
+        target="_blank"
+      >
+        <h3 class="heading">Đăng ký thành viên</h3>
+        <!-- Fullname -->
+        <div class="form-group">
+          <label for="fullname" class="form-label">Họ và tên:</label>
+          <input
+            type="text"
+            name="fullname"
+            id="fullname"
+            class="form-control"
+            placeholder="Nguyễn Văn A"
+          />
+          <span class="form-message"></span>
+        </div>
+        <!-- Email -->
+        <div class="form-group">
+          <label for="email" class="form-label">Email:</label>
+          <input
+            type="email"
+            name="email"
+            id="email"
+            class="form-control"
+            placeholder="NgVanA123@gmail.com"
+          />
+          <span class="form-message"></span>
+        </div>
+        <!-- Password -->
+        <div class="form-group">
+          <label for="password" class="form-label">Mật khẩu:</label>
+          <input
+            type="password"
+            name="password"
+            id="password"
+            class="form-control"
+            placeholder="*******"
+          />
+          <span class="form-message"></span>
+        </div>
+        <!-- Password Confirmation -->
+        <div class="form-group">
+          <label for="password-confirmation" class="form-label"
+            >Nhập lại mật khẩu:</label
+          >
+          <input
+            type="password"
+            name="password_confirmation"
+            id="password-confirmation"
+            class="form-control"
+            placeholder="*******"
+          />
+          <span class="form-message"></span>
+        </div>
+        <!-- Gender -->
+        <div class="form-group">
+          <label for="gender" class="form-label">Giới tính</label>
+          <div class="form-radio">
+            <label for="male">Nam</label>
+            <input
+              type="radio"
+              name="gender"
+              id="male"
+              class="form-control"
+              value="Nam"
+            />
+            <label for="female">Nữ</label>
+            <input
+              type="radio"
+              name="gender"
+              id="female"
+              class="form-control"
+              value="Nữ"
+            />
+            <label for="other">Khác</label>
+            <input
+              type="radio"
+              name="gender"
+              id="other"
+              class="form-control"
+              value="Khác"
+            />
+          </div>
+
+          <span class="form-message"></span>
+        </div>
+        <button type="submit" class="form-submit">Đăng ký</button>
+      </form>
+    </main>
+    <!-- JS -->
+    <script src="./validator.js"></script>
+    <script>
+      Validator({
+        form: "#form_1",
+        formGroupSelector: ".form-group",
+        errorSelector: ".form-message",
+        rules: [
+          Validator.isRequired("#fullname", "Vui lòng nhập tên đầy đủ của bạn"),
+          Validator.isRequired("#email"),
+          Validator.isEmail("#email"),
+          Validator.isRequired("#password"),
+          Validator.minLength("#password", 6),
+          Validator.isRequired("#password-confirmation"),
+          Validator.isConfirmed(
+            "#password-confirmation",
+            function () {
+              return document.querySelector("#form_1 #password").value;
+            },
+            "Mật khẩu nhập lại không chính xác"
+          ),
+          Validator.isRequired('input[name = "gender"]'),
+        ],
+        onSubmit: function (data) {
+          // Call API
+          console.log(data);
+        },
+      });
+    </script>
+  </body>
+</html>
